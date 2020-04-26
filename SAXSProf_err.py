@@ -133,6 +133,7 @@ saxs1.P = 3.8e12   # CHESS-U Flux, Ph/s
 saxs1.set_energy(14.14) # this energy is energy for simulated data
 
 # re-calculate visible q-range and "pixels per bin" array (NofPixels)
+# RM! 04.26.20, mask parameters must be updated for Eiger4M detector.
 saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 
 # need to re-load model so we can re-interpolate onto new default_q
