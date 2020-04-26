@@ -223,32 +223,30 @@ plt.plot(conc,1.0/(final_slope*np.array(conc)),label='1/c fit')
 
 plt.ylabel("1/sig_Rg/Rg",size=22)
 plt.xlabel('$concentration$',size=22)
-
 for tick in ax1.xaxis.get_major_ticks():
     tick.label1.set_fontsize(20)
 #    tick.label1.set_fontname('Helvetica')
 for tick in ax1.yaxis.get_major_ticks():
     tick.label1.set_fontsize(20)
 
-#plt.savefig('SAXProf_ScatterCurve.png', format='png')
+
 plt.legend()
+#plt.savefig('SAXProf_ScatterCurve.png', format='png')
+
 plt.show()
 
+
+######################################################
+
 ## RM! 04.15.2020 Edits to call PlotSAXS class
-
 #saxsp = PlotSAXS()
-
 #saxsp.plot_Kratky(saxs1, I_no_noise, I_w_noise)
-
 #saxsp.plot_I_w_noise(saxs1, I_no_noise, I_w_noise)
-
 #saxsp.plot_guinier_pure(saxs1, I_no_noise, I_w_noise)
-
 ## Does not work with FoxS input ##
 # saxsp.plot_shape(saxs1)
-
 #saxsp.plot_PDDR(saxs1)
-
 #saxsp.print_output(saxs1)
 
+######################################################
 
