@@ -139,6 +139,10 @@ saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 # need to re-load model so we can re-interpolate onto new default_q
 saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 
+
+
+
+
 # generate buffer profile. simulate_buf uses trimmed mask_q for q-values
 try:
     (synth_buf, MT_cell, Vac_cell, win_cell, buf_cell) = saxs1.simulate_buf(subtracted=True)
@@ -146,13 +150,6 @@ except ValueError as e: # this essentially says if a ValueError occurs, call it 
     print (e.args) # of the instance, and has it printed, and then forces the ValueError to occur.
     raise e
 
-
-plt.rc("axes",linewidth=2)
-#plt.rc("xticks",linewidth=3)
-plt.rc("lines", markeredgewidth=2)
-plt.rc('font', **{"sans-serif":["Arial"]})
-fig = plt.figure(figsize = (8,8))
-ax1 = fig.add_subplot(1,1,1)
 
 conc = []
 errRg =[]
@@ -185,7 +182,7 @@ for c in np.arange(0.05,5.0,0.1):
 
     #err_Rg = np.sqrt(-3*err_slope)
 
-    print c,Rg,sig_Rg/Rg,Rg*saxs1.buf_model_q[imax]
+    # print c,Rg,sig_Rg/Rg,Rg*saxs1.buf_model_q[imax]
 
     conc.append(c)
     errRg.append(sig_Rg/Rg)
@@ -210,9 +207,16 @@ for c in np.arange(0.05,5.0,0.1):
 #ax1.legend(loc="lower left", fontsize=14)
 
 inv_err = 1.0/np.array(errRg)
-
+plt.rc("axes",linewidth=2)
+#plt.rc("xticks",linewidth=3)
+plt.rc("lines", markeredgewidth=2)
+plt.rc('font', **{"sans-serif":["Arial"]})
+fig = plt.figure(figsize = (8,8))
+ax1 = fig.add_subplot(1,1,1)
 #plt.plot(conc, inv_err,label="SAXSProf")
 plt.plot(conc,errRg,'-o',label='SAXSProf')
+plt.savefig('Inv_Error_vs_Concentration2.png', format='png')
+plt.show()
 
 # fit data to 1/c by calculating scale factor from first two points
 
@@ -223,17 +227,20 @@ plt.plot(conc,1.0/(final_slope*np.array(conc)),label='1/c fit')
 
 plt.ylabel("1/sig_Rg/Rg",size=22)
 plt.xlabel('$concentration$',size=22)
-for tick in ax1.xaxis.get_major_ticks():
-    tick.label1.set_fontsize(20)
-#    tick.label1.set_fontname('Helvetica')
-for tick in ax1.yaxis.get_major_ticks():
-    tick.label1.set_fontsize(20)
-
-
-plt.legend()
-#plt.savefig('SAXProf_ScatterCurve.png', format='png')
+# for tick in ax1.xaxis.get_major_ticks():
+#     tick.label1.set_fontsize(20)
+# #    tick.label1.set_fontname('Helvetica')
+# for tick in ax1.yaxis.get_major_ticks():
+#     tick.label1.set_fontsize(20)
+# plt.legend()
+plt.savefig('Inv_Error_vs_Concentration.png', format='png')
 
 plt.show()
+
+
+
+
+
 
 
 ######################################################
