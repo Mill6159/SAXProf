@@ -141,8 +141,15 @@ saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 
 err_data = ERRORPROP(saxs1 = saxs1)
-err_data.calc_errRg(imin =2, imax = 120)
+conc, rgError, log_sig = err_data.calc_errRg()
 
+err_data.plot_S1(conc, [x * 100 for x in rgError], 'ERROR', 'SAVELABEL')
+
+# plt.plot(err_data.saxs1.buf_model_q, err_data.I_w_noise)
+# plt.savefig("TEST.png", format = 'png')
+# plt.show()
+# print (rgError)
+# err_data.plot_S1(conc, rgError, plotlabel='LABEL', savelabel='SAVELABEL')
 
 # # generate buffer profile. simulate_buf uses trimmed mask_q for q-values
 # try:
