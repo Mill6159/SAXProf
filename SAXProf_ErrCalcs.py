@@ -75,7 +75,7 @@ class ERRORPROP:
         print('Default imin/imax values used: 0 and 90')
 
 
-    def plot_S1(self, X, Y, plotlabel = '', savelabel = ''):
+    def plot_S1(self, X, Y, plotlabel = '', savelabel = '', xlabel = '', ylabel = ''):
         if plotlabel == '' and savelabel == '':
             plotlabel = 'No label provided'
             savelabel = 'No_Label_Provided'
@@ -89,8 +89,10 @@ class ERRORPROP:
                 tick.label1.set_fontname('Helvetica')
             for tick in ax1.yaxis.get_major_ticks():
                 tick.label1.set_fontsize(20)
-            plt.legend(numpoints=1, fontsize=18, loc="best")
+            plt.ylabel('No Y label provided',size=22)
+            plt.xlabel('No X label provided',size=22)
             plt.plot(X, Y, '-o', label=plotlabel)
+            plt.legend(numpoints=1, fontsize=18, loc="best")
             plt.savefig(savelabel + ".png", format='png',
                         bbox_inches = 'tight')
             plt.show()
@@ -105,8 +107,58 @@ class ERRORPROP:
                 tick.label1.set_fontname('Helvetica')
             for tick in ax1.yaxis.get_major_ticks():
                 tick.label1.set_fontsize(20)
-            plt.legend(numpoints=1, fontsize=18, loc="best")
+            plt.ylabel(ylabel,size=22)
+            plt.xlabel(xlabel,size=22)
             plt.plot(X, Y, '-o', label=plotlabel)
+            plt.legend(numpoints=1, fontsize=18, loc="best")
+            plt.savefig(savelabel + ".png", format='png',
+                        bbox_inches = 'tight')
+            plt.show()
+
+    def plot_S2(self, X, Y1, Y2, plotlabel1 = '', plotlabel2 = '', savelabel = '', xlabel = '', ylabel = ''):
+        if plotlabel1 == '' and plotlabel2 == '' and savelabel == '':
+            plotlabel1 = 'No label provided'
+            plotlabel2 = 'No label provided'
+            savelabel = 'No_Label_Provided'
+            plt.rc("axes", linewidth=2)
+            plt.rc("lines", markeredgewidth=2)
+            plt.rc('font', **{"sans-serif": ["Arial"]})
+            fig = plt.figure(figsize=(8, 8))
+            ax1 = fig.add_subplot(1, 1, 1)
+            for tick in ax1.xaxis.get_major_ticks():
+                tick.label1.set_fontsize(20)
+                tick.label1.set_fontname('Helvetica')
+            for tick in ax1.yaxis.get_major_ticks():
+                tick.label1.set_fontsize(20)
+            plt.ylabel('No Y label provided',size=22)
+            plt.xlabel('No X label provided',size=22)
+            plt.plot(X, Y1, '-o', label=plotlabel1)
+            plt.plot(X, Y2, '-o',
+                     color = 'k',
+                     label=plotlabel2)
+            plt.legend(numpoints=1, fontsize=18, loc="best")
+            plt.savefig(savelabel + ".png", format='png',
+                        bbox_inches = 'tight')
+            plt.show()
+        else:
+            plt.rc("axes", linewidth=2)
+            plt.rc("lines", markeredgewidth=2)
+            plt.rc('font', **{"sans-serif": ["Arial"]})
+            fig = plt.figure(figsize=(8, 8))
+            ax1 = fig.add_subplot(1, 1, 1)
+            for tick in ax1.xaxis.get_major_ticks():
+                tick.label1.set_fontsize(20)
+                tick.label1.set_fontname('Helvetica')
+            for tick in ax1.yaxis.get_major_ticks():
+                tick.label1.set_fontsize(20)
+            plt.ylabel(ylabel,size=22)
+            plt.xlabel(xlabel,size=22)
+            plt.plot(X, Y1, '-o', label=plotlabel1)
+            plt.plot(X, Y2, '--',
+                     linewidth = 4,
+                     color = 'k',
+                     label=plotlabel2)
+            plt.legend(numpoints=1, fontsize=18, loc="best")
             plt.savefig(savelabel + ".png", format='png',
                         bbox_inches = 'tight')
             plt.show()

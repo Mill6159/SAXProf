@@ -140,23 +140,33 @@ saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 # need to re-load model so we can re-interpolate onto new default_q
 saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 
+
+# RM & REG! Apr2020
+##### Rg Error Modeling #####
+
 err_data = ERRORPROP(saxs1 = saxs1)
 conc, rgError, log_sig = err_data.calc_errRg()
 
-err_data.plot_S1(conc, [x * 100 for x in rgError], 'ERROR', 'SAVELABEL')
+err_data.plot_S1(conc, [x * 100 for x in rgError],
+                 plotlabel = 'Simulated Error - Analytical model', savelabel = 'Simulated_Error_Func_Conc',
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
-# plt.plot(err_data.saxs1.buf_model_q, err_data.I_w_noise)
-# plt.savefig("TEST.png", format = 'png')
-# plt.show()
-# print (rgError)
-# err_data.plot_S1(conc, rgError, plotlabel='LABEL', savelabel='SAVELABEL')
 
-# # generate buffer profile. simulate_buf uses trimmed mask_q for q-values
-# try:
-#     (synth_buf, MT_cell, Vac_cell, win_cell, buf_cell) = saxs1.simulate_buf(subtracted=True)
-# except ValueError as e: # this essentially says if a ValueError occurs, call it e, extracts the args component
-#     print (e.args) # of the instance, and has it printed, and then forces the ValueError to occur.
-#     raise e
+# Quick calculate model from initial points (slope) of the simulated data
+inv_err = 1/np.array(rgError)
+final_slope = (inv_err[1]-inv_err[0])/(conc[1]-conc[0])
+
+# Technically this final_slope term should be empirically model as it may not be known apriori
+
+err_data.plot_S1(conc, 1.0/(final_slope*np.array(conc)),
+                 plotlabel= '($\\frac{1}{conc}$) Model', savelabel = 'Inv_c_Model',
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = 'Model')
+
+err_data.plot_S2(conc, rgError, 1.0/(final_slope*np.array(conc)),
+                 plotlabel1 = 'Simulated Error - Analytical model', plotlabel2 = '($\\frac{1}{conc}$) Model',
+                 savelabel = 'Analytical_and_Inv_c_Rg_ErrorModel',
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
+
 #
 #
 # conc = []
@@ -246,8 +256,6 @@ err_data.plot_S1(conc, [x * 100 for x in rgError], 'ERROR', 'SAVELABEL')
 # plt.show()
 
 
-# test = errProp()
-# error.calc_errRg(imin = 1, imax = 125)
 
 
 
