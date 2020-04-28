@@ -179,10 +179,14 @@ for i in range(len(density)):
 for i in range(len(ps)):
     rho.append((saxs1.pp - ps[i]) * (2.818 * 10 ** -13))
 
-print(rho)
 
 I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, rho)
-print ('testing function:', I[0])
+# print ('testing function:', len(I), len(rho))
+err_data.plot_S2(saxs1.buf_model_q, I[0], I[6], plotlabel1= '0 MPa',
+                 plotlabel2='350 MPa',
+                 savelabel='Scattering_Curve_AtMultiplePressures',
+                 xlabel='q', ylabel='I(q)')
+
 ######################################################
 
 ## RM! 04.15.2020 Edits to call PlotSAXS class

@@ -597,7 +597,7 @@ class SAXS:
         # RM! Generate series of I0abs values for every contrast value.
 
         I0abs = []
-        for i in range(0, len(self.p) - 1):
+        for i in range(0, len(self.p)):
             I0abs.append((self.v * self.p[i]) ** 2 * self.mw * c / (6.022e23))
 
         # I0abs = (self.v * self.p) ** 2 * self.mw * c / (6.022e23)
@@ -607,7 +607,7 @@ class SAXS:
         I0 = []
         preFac = exp(-self.mu_win * self.d_win) * self.det_eff * exp(-self.mu * self.d) * self.P / (
                 self.a ** 2) * self.d
-        for i in range(0, len(I0abs) - 1):
+        for i in range(0, len(I0abs)):
             I0.append(preFac * I0abs[i])
 
         # print "I(0) = ", I0*self.t*(self.pixel_size)**2, "(photons/pixel)"
@@ -618,7 +618,7 @@ class SAXS:
         # print "water  transmission: ",exp(-self.mu*self.d)
 
         I = []
-        for i in range(0, len(I0) - 1):
+        for i in range(0, len(I0)):
             I.append(I0[i] * self.FF(q))
 
         # I = I0 * self.FF(q)
