@@ -185,7 +185,7 @@ I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, rho)
 err_data.plot_S2(saxs1.buf_model_q, I[0], I[6], plotlabel1= '0 MPa',
                  plotlabel2='350 MPa',
                  savelabel='Scattering_Curve_AtMultiplePressures',
-                 xlabel='q', ylabel='I(q)')
+                 xlabel='q($\\AA^{-1}$)', ylabel='I(q)')
 
 ######################################################
 
