@@ -145,7 +145,7 @@ saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 ##### Rg Error Modeling #####
 
 err_data = ERRORPROP(saxs1 = saxs1)
-conc, rgError, log_sig = err_data.calc_errRg()
+conc, rgError, log_sig = err_data.calc_errRg_conc()
 
 err_data.plot_S1(conc, [x * 100 for x in rgError],
                  plotlabel = 'Simulated Error - Analytical model', savelabel = 'Simulated_Error_Func_Conc',
@@ -163,7 +163,7 @@ err_data.plot_S1(conc, 1.0/(final_slope*np.array(conc)),
                  xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = 'Model')
 
 err_data.plot_S2(conc, rgError, 1.0/(final_slope*np.array(conc)),
-                 plotlabel1 = 'Simulated Error - Analytical model', plotlabel2 = '($\\frac{1}{conc}$) Model',
+                 plotlabel1 = 'Simulated Error - Analytical model', plotlabel2 = '($\\frac{1}{final \ slope \cdot conc}$)',
                  savelabel = 'Analytical_and_Inv_c_Rg_ErrorModel',
                  xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
 
@@ -191,25 +191,16 @@ err_data.plot_S2(conc, rgError, 1.0/(final_slope*np.array(conc)),
 #     imax = 90
 #
 #     log_sigma = np.abs(saxs1.sigma/I_w_noise)   # converts sigma of the variable to sigma for log of the variable
-#
 #     (inter,slope,sig2_inter,sig2_slope) = saxs1.lsqfity_with_sigmas(saxs1.buf_model_q[0:imax]**2, np.log(I_w_noise[0:imax]), log_sigma[0:imax])
-#
 #     Rg = np.sqrt(-3*slope)
-#
 #     sig_Rg = np.abs(Rg*np.sqrt(sig2_slope)/(2*slope))    # converts the sigma^2 for the slope to the sigma of Rg
-#
 #     #err_Rg = np.sqrt(-3*err_slope)
-#
 #     # print c,Rg,sig_Rg/Rg,Rg*saxs1.buf_model_q[imax]
-#
 #     conc.append(c)
 #     errRg.append(sig_Rg/Rg)
-#
 # #    errRg.append()
-#
 #     #ax1.set_xlim(5.0,30.0)
 #     #ax1.set_ylim(0.002,0.1)
-#
 # #    plt.plot(saxs1.buf_model_q[0:imax]**2,np.log(I_no_noise[0:imax]),lw=2,
 # #                 label = 'No Noise')
 #
