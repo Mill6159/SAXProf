@@ -36,3 +36,12 @@ How the code works:
 Good luck. 
 
 Richard
+
+###################
+Additional notes for RM/REG spring2020 updates:
+
+We generated a new class (SAXProf_ErrCalcs.py) that utilizes the inheritance property of Python. (i.e. it imports from the other modules to do its calculations).
+This class calculates the error in Rg as determined by the Guiner fit as is outlined in the *_Formula.pdf file within this repository.
+This allows for comparison of the Rg error from an analytical model (i.e. we know where the error comes from) and the error produced by many fitting routines
+such as RAW or primus.
+Furthermore, this allowed for us to model the error in Rg as a function of concentration and pressure (contrast), which is also outlined in the *_Formula.pdf file.
