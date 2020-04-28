@@ -5,7 +5,9 @@ class ERRORPROP:
 
     def __init__(self, saxs1 = [], I_no_noise = [], I_w_noise = [], I_no_noise_calc = [], c = []):
         """
-        Description:
+        Description: This initializes the class. It imports several important parameters, particularly from the SAXS() class.
+        This class also assumes an object has already been assigned to the SAXS() class. In this case, it is saxs1.
+
         """
         self.saxs1 = saxs1
 
