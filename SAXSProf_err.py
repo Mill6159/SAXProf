@@ -168,8 +168,20 @@ err_data.plot_S2(conc, rgError, 1.0/(final_slope*np.array(conc)),
                  xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
 
 # RM! 04.28.2020
-test = [30376724222.528214, 29959417761.80821, 28367436004.208202, 26530533976.208206, 23327730440.208195, 20586507413.8082, 19343066041.0082]
-I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, test)
+# Contrast values taken from RM script.
+density = [0.99707, 1.0015, 1.0184, 1.0379, 1.0719, 1.1010, 1.1142]
+pressure = [0, 10, 50, 100, 200, 300, 350]
+ps = []
+rho = []
+for i in range(len(density)):
+    ps.append(density[i] * 3.3428E+23)  # conversion factor from g/ml to electrons per cm^3
+
+for i in range(len(ps)):
+    rho.append((saxs1.pp - ps[i]) * (2.818 * 10 ** -13))
+
+print(rho)
+
+I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, rho)
 print ('testing function:', I[0])
 ######################################################
 

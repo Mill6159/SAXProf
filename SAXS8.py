@@ -561,6 +561,7 @@ class SAXS:
 
         RM! Currently, this script exports an array of arrays, with length equal to the length of the input contrast list.
         If the user returns I[0], the first array (i.e. the scattering curve at the first contrast value) will be returned.
+        Need to clean up the output possibly.
         """
         V = self.V
         R = self.R
