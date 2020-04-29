@@ -555,6 +555,64 @@ class SAXS:
 
     # RM!
 
+    def I_of_q_input_rho(self, c, mw, q, p):
+        """ Calculate smooth I(q) based on reference:Stuhrmann, H. B. (1980). Small angle x-ray scattering of macromolecules in solution.
+        In Synchrotron Radiation Research (Winick, H., Doniach, S., ed.), pp. 513-531. Plenum Press, New York.
+        """
+        V = self.V
+        R = self.R
+
+        self.name = "%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%.2g" % (
+        self.detector, c, mw, self.t, self.shape, self.hr, self.qRg, self.salt_type, self.salt_c, self.energy, self.a,
+        self.P)
+
+        """
+        print "lam", self.lam
+        print "energy", self.energy
+        print "det_eff", self.det_eff
+        print "I_I0_ratio", self.I_I0_ratio
+        print "P",self.P
+        print "a",self.a
+        print "v",self.v
+        print "p",self.p
+        print "mw",self.mw
+        print 'd',self.d
+        print 'c',c
+        print "t",self.t
+        print 'FF(q=0)',self.FF(0.0)
+        """
+        # convert c from mg/ml to g/cm**3, MW from kDa to g, (note: 1000's cancel), P is photons/s entering the sample.
+        #
+        # print "solid angle correction range: ", np.max(self.SolidAngCor(q)), np.min(self.SolidAngCor(q))
+
+        self.mu_win = self.mu_factor * self.lam ** 2.9  # energy dependence of window absorption
+        # print "mu_win = ", self.mu_win
+
+        self.mu = 2.8 * self.lam ** 3  # energy dependence of water absorption
+
+        I0abs = (self.v * p) ** 2 * self.mw * c / (6.022e23)
+        PreFac = exp(-self.mu_win * self.d_win) * self.det_eff * exp(-self.mu * self.d) * self.P / (
+                    self.a ** 2) * self.d
+        I0 = PreFac * I0abs
+
+        # print "I(0) = ", I0*self.t*(self.pixel_size)**2, "(photons/pixel)"
+        # print "I(0) = ", I0abs, " (cm-1)"
+        # Full Prefactor converts cm-1 to photons/pixel
+        # print "Full Prefactor = ", PreFac*self.t*(self.pixel_size)**2
+        # print "window transmission: ",exp(-self.mu_win*self.d_win)
+        # print "water  transmission: ",exp(-self.mu*self.d)
+
+        I = I0 * self.FF(q)
+
+        self.I0_model = I0
+        self.I0_model_abs = I0abs
+
+        # Return I: photons per cm**2 per unit time
+        # multiply by pixel area (cm**2) and by exposure time to get actual measured intensity (average photons per pixel at each sampled q bin.
+        # This formula assumes a delta-function beam profile. Finite beam profile should be implemented someday, but won't make much difference in counts.
+
+        return I
+
     def I_of_q_variable_contrast(self, c, mw, q, p):
         """ Calculate smooth I(q) based on reference:Stuhrmann, H. B. (1980). Small angle x-ray scattering of macromolecules in solution.
         In Synchrotron Radiation Research (Winick, H., Doniach, S., ed.), pp. 513-531. Plenum Press, New York.
@@ -569,7 +627,7 @@ class SAXS:
         self.name = "%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%.2g" % (
         self.detector, c, mw, self.t, self.shape, self.hr, self.qRg, self.salt_type, self.salt_c, self.energy, self.a,
         self.P)
-        self.p = p
+        # self.p = p
         """
         print "lam", self.lam
         print "energy", self.energy
@@ -597,8 +655,8 @@ class SAXS:
         # RM! Generate series of I0abs values for every contrast value.
 
         I0abs = []
-        for i in range(0, len(self.p)):
-            I0abs.append((self.v * self.p[i]) ** 2 * self.mw * c / (6.022e23))
+        for i in range(0, len(p)):
+            I0abs.append((self.v * p[i]) ** 2 * self.mw * c / (6.022e23))
 
         # I0abs = (self.v * self.p) ** 2 * self.mw * c / (6.022e23)
         # PreFac = exp(-self.mu_win * self.d_win) * self.det_eff * exp(-self.mu * self.d) * self.P / (
