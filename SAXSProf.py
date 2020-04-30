@@ -182,7 +182,6 @@ for i in range(len(ps)):
 
 
 I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, rho)
-# print ('testing function:', len(I), len(rho))
 err_data.plot_S2(saxs1.buf_model_q, I[0], I[6], plotlabel1= '0 MPa',
                  plotlabel2='350 MPa',
                  savelabel='Scattering_Curve_AtMultiplePressures',
@@ -191,9 +190,9 @@ err_data.plot_S2(saxs1.buf_model_q, I[0], I[6], plotlabel1= '0 MPa',
 
 rho, Rg_error_contrast, sig2_Rg_out = err_data.calc_errRg_contrast()
 
-err_data.plot_S1(rho, Rg_error_contrast,
+err_data.plot_S1(rho, [x * 100 for x in Rg_error_contrast],
                  plotlabel= 'Simulated Error', savelabel = 'Sim_err_Rg_func_of_Contrast',
-                 xlabel = '$\Delta \\rho (UNITS)$', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
+                 xlabel = '$\Delta \\rho (UNITS)$', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
 ######################################################
 
