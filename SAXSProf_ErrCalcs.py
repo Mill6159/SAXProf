@@ -94,6 +94,7 @@ class err_Calcs:
         Vectors must be of equal length.
         """
         if imin == [] and imax == [] and density == [] and pressure == []:
+            # Input general parameters #
             saxs1 = self.saxs1
             c = self.saxs1.c # use default conc.
             pp = self.saxs1.pp
@@ -101,9 +102,9 @@ class err_Calcs:
             t = self.saxs1.t # default exposure time
             pixel_size = self.saxs1.pixel_size
             q = self.saxs1.buf_model_q
-            sigma = self.saxs1.sigma
             density = [0.99707, 1.0015, 1.0184, 1.0379, 1.0719, 1.1010, 1.1142]
             pressure = [0, 10, 50, 100, 200, 300, 350]
+            # Calculate contrast term based on supplied densities #
             ps = []
             rho = []
             for i in range(len(density)):
@@ -111,7 +112,9 @@ class err_Calcs:
 
             for i in range(len(ps)):
                 rho.append((pp - ps[i]) * (2.818 * 10 ** -13))
-            cont = [] # for exporting contrast at the end
+
+            ## Now iterate over the error calculation for the SAXS curve at each contrast value
+            # This is the 'crucial' component of the function.
             errRg = []
             sig2_Rg_out = []
             if len(ps) == len(rho): # To make sure calculations went well.
@@ -129,11 +132,12 @@ class err_Calcs:
                     I_w_noise.append(t * pixel_size ** 2 * saxs1.with_noise(t, q, I))
                     I_w_noise = I_w_noise[0]
 
+                    # with_noise() should recalculate the sigma values
+                    # therefore, must call sigma for each iteration of the loop.
+                    sigma = saxs1.sigma
                     log_sigma = []
                     for i in range(len(sigma)):
                         log_sigma.append((np.abs(sigma[i]/I_w_noise[i])))
-                    # print('length of log sigma',len(log_sigma))
-
 
                     (inter, slope, sig2_inter, sig2_slope) = saxs1.lsqfity_with_sigmas(saxs1.buf_model_q[imin:imax] ** 2, np.log(I_w_noise[imin:imax]),
                                                                                np.array(log_sigma[imin:imax]))
