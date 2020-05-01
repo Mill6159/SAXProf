@@ -151,11 +151,11 @@ saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 err_data = err_Calcs(saxs1 = saxs1)
 conc, rgError, log_sig = err_data.calc_errRg_conc()
 
-
 err_data.plot_S1(conc, [x * 100 for x in rgError],
-                 plotlabel = 'Simulated Error - Analytical model', savelabel = 'Simulated_Error_Func_Conc',
-                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
-
+                 plotlabel = 'Simulated Error - Analytical model',
+                 savelabel = 'Simulated_Error_Func_Conc',
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)',
+                 ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
 # Quick calculate model from initial points (slope) of the simulated data
 inv_err = 1/np.array(rgError)
@@ -164,13 +164,17 @@ final_slope = (inv_err[1]-inv_err[0])/(conc[1]-conc[0])
 # Technically this final_slope term should be empirically model as it may not be known apriori
 
 err_data.plot_S1(conc, 1.0/(final_slope*np.array(conc)),
-                 plotlabel= '($\\frac{1}{conc}$) Model', savelabel = 'Inv_c_Model',
-                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = 'Model')
+                 plotlabel= '($\\frac{1}{conc}$) Model',
+                 savelabel = 'Inv_c_Model',
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)',
+                 ylabel = 'Model')
 
 err_data.plot_S2(conc, rgError, 1.0/(final_slope*np.array(conc)),
-                 plotlabel1 = 'Simulated Error - Analytical model', plotlabel2 = '($\\frac{1}{final \ slope \cdot conc}$)',
+                 plotlabel1 = 'Simulated Error - Analytical model',
+                 plotlabel2 = '($\\frac{1}{final \ slope \cdot conc}$)',
                  savelabel = 'Analytical_and_Inv_c_Rg_ErrorModel',
-                 xlabel = 'Conc. ($\\frac{mg}{ml}$)', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
+                 xlabel = 'Conc. ($\\frac{mg}{ml}$)',
+                 ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$)')
 
 # RM! 04.28.2020
 # Contrast values taken from RM script.
@@ -186,17 +190,32 @@ for i in range(len(ps)):
 
 
 I = saxs1.I_of_q_variable_contrast(saxs1.c, saxs1.mw, saxs1.buf_model_q, rho)
-err_data.plot_S2(saxs1.buf_model_q, I[0], I[6], plotlabel1= '0 MPa',
+err_data.plot_S2(saxs1.buf_model_q, I[0], I[6],
+                 plotlabel1= '0 MPa',
                  plotlabel2='350 MPa',
                  savelabel='Scattering_Curve_AtMultiplePressures',
-                 xlabel='q($\\AA^{-1}$)', ylabel='I(q)')
+                 xlabel='q($\\AA^{-1}$)',
+                 ylabel='I(q)')
 
 
 rho, Rg_error_contrast, sig2_Rg_out = err_data.calc_errRg_contrast()
 
 err_data.plot_S1(rho, [x * 100 for x in Rg_error_contrast],
-                 plotlabel= 'Simulated Error', savelabel = 'Sim_err_Rg_func_of_Contrast',
-                 xlabel = '$\Delta \\rho (UNITS)$', ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
+                 plotlabel= 'Simulated Error',
+                 savelabel = 'Sim_err_Rg_func_of_Contrast',
+                 xlabel = '$\Delta \\rho (UNITS)$',
+                 ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
+
+
+model, c, Rg_error_contrast = err_data.rgErr_contrast_model()
+
+err_data.plot_S2(rho, Rg_error_contrast, model,
+                 plotlabel1 = 'Simulated Error - Analytical model',
+                 plotlabel2 = '$\\frac{%s}{\\rho}$' % "{:.2e}".format(c[0]),
+                 savelabel = 'Sim_err_Rg_func_of_Contrast_w_InvRho',
+                 xlabel = '$\Delta \\rho (UNITS)$',
+                 ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
+
 
 ######################################################
 

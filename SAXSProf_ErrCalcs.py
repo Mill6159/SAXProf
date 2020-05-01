@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.optimize import curve_fit
 
 class err_Calcs:
 
@@ -157,6 +158,23 @@ class err_Calcs:
             else:
                 print('Something went wrong calculating the contrast term.')
         print('Default imin/imax values used: 0 and 90')
+
+    def rgErr_contrast_model(self):
+        """
+        RM! Currently uses default settings for calc_errRg_contrast() function. I will need to add functionality to allow the user
+        to define those inputs as they will severely impact the model
+        """
+        model = []
+        rho, Rg_error_contrast, sig2_Rg_out = self.calc_errRg_contrast()
+
+        def cont_model(rho, constant):
+            return (constant / (rho))
+        g = [4 * 10 **7]
+        # x = [x ** 2 for x in rho]
+        c, cov = curve_fit(cont_model, rho, Rg_error_contrast, g)
+
+        model = cont_model(rho, c[0])
+        return model, c, Rg_error_contrast
 
 
     def plot_S1(self, X, Y, plotlabel = '', savelabel = '', xlabel = '', ylabel = ''):
