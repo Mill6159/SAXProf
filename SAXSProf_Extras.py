@@ -1,3 +1,16 @@
+# chisqprob is depricated. Replacement will be stats.distributions.chi2.sf
+
+# derived from Fig3A_molmovdb_time
+#
+# from Fig3A_stats_energy_scan_detect_comp.py
+
+### Version of code used to test self.sigma_profile_fit
+# This code uses vac, window, and buffer subtracted profiles from
+# the Nov 7 run to reproduce lysozyme data for the first time
+# in a way that you can change sample and window thickness correctly.
+
+## This version has been modified for the atlastin models
+
 # These files below are only used when generating the "standard profiles."
 
 # buffer with empty cell subtracted
