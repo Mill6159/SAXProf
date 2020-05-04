@@ -12,8 +12,7 @@ from matplotlib import pyplot as plt
 # import colorsys
 # import sys
 import warnings
-####################################
-
+#############################################################################
 #############################################################################
 
 # chisqprob is depricated. Replacement will be stats.distributions.chi2.sf
@@ -56,17 +55,17 @@ sensor_thickness = 0.032  # Pilatus sensor thickness
 # These files below are only used when generating the "standard profiles."
 
 # buffer with empty cell subtracted
-buffer_model = "/S_A_nov07_028_lysbufnorm_flat.dat"
-buffer_exposure = t  # exposure used for buffer model
-buffer_flux = P      # flux used for buffer model
-
-vac_model = "/A_nov07_072_lysbufnorm.dat"
-vac_exposure = t
-vac_flux = P
-
-win_model = "/S_A_nov07_026_lysbufnorm.dat"
-win_exposure = t
-win_flux = P
+# buffer_model = "/S_A_nov07_028_lysbufnorm_flat.dat"
+# buffer_exposure = t  # exposure used for buffer model
+# buffer_flux = P      # flux used for buffer model
+#
+# vac_model = "/A_nov07_072_lysbufnorm.dat"
+# vac_exposure = t
+# vac_flux = P
+#
+# win_model = "/S_A_nov07_026_lysbufnorm.dat"
+# win_exposure = t
+# win_flux = P
 
 #############################################################################
 #############################################################################
@@ -89,10 +88,10 @@ saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 # buffer, vacuum, window, and model profiles read in and interpolated onto default_q
 # saxs1.buf_q are the q points of default_q that fall within buf's q range
 #
-#saxs1.load_buf(buffer_model, t=buffer_exposure, P=buffer_flux, interpolate=True, q_array = saxs1.default_q)
-#saxs1.load_vac(vac_model, t=vac_exposure, P=vac_flux, interpolate=True, q_array = saxs1.default_q)
-#saxs1.load_win(win_model, t=win_exposure, P=win_flux, interpolate=True, q_array = saxs1.default_q)
-saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
+# saxs1.load_buf(buffer_model, t=buffer_exposure, P=buffer_flux, interpolate=True, q_array = saxs1.default_q)
+# saxs1.load_vac(vac_model, t=vac_exposure, P=vac_flux, interpolate=True, q_array = saxs1.default_q)
+# saxs1.load_win(win_model, t=win_exposure, P=win_flux, interpolate=True, q_array = saxs1.default_q)
+# saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 
 #############################################################################
 # Here we load in
@@ -211,7 +210,8 @@ rho.pop(2)
 popRho = rho
 Rg_error_contrast.pop(2)
 popRgErr = Rg_error_contrast
-exptData = np.array(CytC_data['RgErrRelPercent'])
+exptData = np.ndarray.tolist(CytC_data['RgErrRelPercent'])
+exptData.pop(2)
 
 err_data.plot_S2(popRho, [x * 100 for x in popRgErr], exptData,
                  plotlabel1 = 'Simulated Error - Analytical model',
