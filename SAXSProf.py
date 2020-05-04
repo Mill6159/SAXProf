@@ -73,8 +73,8 @@ win_flux = P
 
 sample_model_1 = "6lyz.pdb.dat"
 
-c = 4.0 # concentration (mg.ml)
-t = 10 # Exposure time (seconds)
+c = 5.0 # concentration (mg.ml)
+t = 0.4450 # Exposure time (seconds)
 mw1 = 14.3 # Molecular Weight (kDa)
 
 saxs1 = SAXS(mw=mw1,a=a,d=d,energy=energy,P=P,t=t,total_t=t*snaps,c=c,shape='FoxS', detector='100K')
