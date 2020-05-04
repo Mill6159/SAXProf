@@ -82,8 +82,7 @@ saxs1.sensor_thickness = sensor_thickness
 saxs1.det_eff = saxs1.QE(saxs1.lam, saxs1.sensor_thickness)
 
 #  determines the q-space range based on detector and mask. Default_q starts at q = 0, mask_q starts at q_min
-
-saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle") 
+saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 
 # buffer, vacuum, window, and model profiles read in and interpolated onto default_q
 # saxs1.buf_q are the q points of default_q that fall within buf's q range
