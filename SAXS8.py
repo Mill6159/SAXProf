@@ -385,6 +385,7 @@ class SAXS:
         self.name = "%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%s_%.2g" % (
         self.detector, self.c, self.mw, self.t, self.shape, self.hr, self.qRg, self.salt_type, self.salt_c, self.energy,
         self.a, self.P)
+        print "--------------"
 
     ######################################################### Methods starts here#########################################################
     def set_energy(self, energy):
@@ -1596,6 +1597,7 @@ class SAXS:
         (self.vac_q, self.vac_I, self.vac_Sig) = self.readProf(rootname + "vac_I_interp.dat")
         (self.win_q, self.win_I, self.win_Sig) = self.readProf(rootname + "win_I_interp.dat")
         (self.buf_q, self.buf_I, self.buf_Sig) = self.readProf(rootname + "buf_I_interp.dat")
+        print "--------------"
 
     def simulate_buf(self, subtracted=False, no_vac=False, q_array=None, interpolate=True):
         """simulate a typical buffer scattering profile including windows, water (+salt/additives?), and beamline parasitic scatter  """
@@ -1693,7 +1695,7 @@ class SAXS:
 
                 q_trimmed = q_array[start_point:stop_point + 1]
 
-                print "\nsimulate_buf(): Buffer data loaded and interpolated."
+                print "\nsimulate_buf() called: Buffer data loaded and interpolated."
                 print "load_win: self.win_q is q_array[", start_point, ":", stop_point + 1, "]"
 
                 self.buf_model_I = self.interpol(q_trimmed, self.buf_model_q, self.buf_model_I)
@@ -1705,7 +1707,7 @@ class SAXS:
                 self.buf_model_q = q_trimmed
 
                 print "q_array start:", q_array[0], q_array[start_point]
-                print "buf_model_q first last length ", self.buf_model_q[0], self.buf_model_q[-1], len(self.buf_model_q)
+                print "buf_model_q: first, last, length ", self.buf_model_q[0], self.buf_model_q[-1], len(self.buf_model_q)
                 print "--------------"
         else:
             print "\nload_win(): window profile loaded but not interpolated."

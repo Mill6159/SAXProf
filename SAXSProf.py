@@ -26,17 +26,16 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 # Initial User Inputs
 #############################################################
 energy = 9.962 # energy (keV)
-P  = 8.4e11     # flux (photons/s)
-t  = 1.0       # exposure time for individual snapshots (s)
-snaps =  1      # number of snapshots averaged
-a  = 150.47    # sample-to-detector distance (cm)
-d  = 0.15       # sample cell path length (cm)
-
+energy = 14.14 # energy (keV)
+P = 8.4e11     # flux (photons/s)
+P = 3.8e12  # flux (photons/s)
+t = 1.0    # exposure time for individual snapshots (s)
+snaps = 1    # number of snapshots averaged
+a = 150.47   # sample-to-detector distance (cm)
+d = 0.15     # sample cell path length (cm)
 window_type = "mica"  # type of window material on sample cell
-
 sensor_thickness = 0.032  # Pilatus sensor thickness
 
-sample_model_1 = "6lyz.pdb.dat"
 
 c = 5.0 # concentration (mg.ml)
 t = 0.4450 # Exposure time (seconds)
@@ -48,35 +47,22 @@ saxs1.sensor_thickness = sensor_thickness
 saxs1.det_eff = saxs1.QE(saxs1.lam, saxs1.sensor_thickness)
 
 #  determines the q-space range based on detector and mask. Default_q starts at q = 0, mask_q starts at q_min
-saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
-
+# saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 #############################################################################
 # Here we load in
-#############################################################################
-
+# (self.vac_q, self.vac_I, self.vac_Sig)
+# (self.win_q, self.win_I, self.win_Sig)
+# (self.buf_q, self.buf_I, self.buf_Sig)
+# via the function readStandardProfiles() from SAXS class
 saxs1.readStandardProfiles("M_Nov07_")
-
 #############################################################################
 
 saxs1.d = 0.15     # microfluidic mixing chip
 #saxs1.P = 1.6e11   # 8 um x 13 um CRL beam
-saxs1.P = 3.8e12   # CHESS-U Flux, Ph/s
-
-#saxs1.P = 3.8e11   # Oct 2017 30 um x 50 um CRL beam
-
-# don't forget to set the beam dimensions (cm)
-
-#h_beam = 0.005
-#v_beam = 0.003
-
-#h_beam = 0.0008
-#v_beam = 0.0013
-
-#############################################################################
-#############################################################################
+# saxs1.P = 3.8e12   # CHESS-U Flux, Ph/s
 
 # set_energy() alone does NOT reset q-range or mask (see below).
-saxs1.set_energy(14.14) # this energy is energy for simulated data
+# saxs1.set_energy(14.14) # this energy is energy for simulated data
 
 # re-calculate visible q-range and "pixels per bin" array (NofPixels)
 # RM! Note the mask is energy dependent, because the observable angles are energy dependent.
@@ -86,6 +72,7 @@ saxs1.set_energy(14.14) # this energy is energy for simulated data
 saxs1.create_Mask(98, 3, 45, 14, wedge=360.0, type="rectangle")
 
 # need to re-load model so we can re-interpolate onto new default_q
+sample_model_1 = "6lyz.pdb.dat"
 saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 
 
@@ -103,7 +90,7 @@ err_data.plot_S1(conc, [x * 100 for x in rgError],
 
 # Quick calculate model from initial points (slope) of the simulated data
 inv_err = 1/np.array(rgError)
-final_slope = (inv_err[1]-inv_err[0])/(conc[1]-conc[0])
+final_slope = (inv_err[3]-inv_err[2])/(conc[3]-conc[2])
 
 # Technically this final_slope term should be empirically model as it may not be known apriori
 
