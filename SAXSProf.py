@@ -203,19 +203,34 @@ rho, Rg_error_contrast, sig2_Rg_out = err_data.calc_errRg_contrast()
 err_data.plot_S1(rho, [x * 100 for x in Rg_error_contrast],
                  plotlabel= 'Simulated Error',
                  savelabel = 'Sim_err_Rg_func_of_Contrast',
-                 xlabel = '$\Delta \\rho (UNITS)$',
+                 xlabel = '$\Delta \\rho (cm^{-2})$',
                  ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
 
 model, c, Rg_error_contrast = err_data.rgErr_contrast_model()
 
-err_data.plot_S2(rho, Rg_error_contrast, model,
+err_data.plot_S2(rho, [x * 100 for x in Rg_error_contrast], [x * 100 for x in model],
                  plotlabel1 = 'Simulated Error - Analytical model',
                  plotlabel2 = '$\\frac{%s}{\\rho}$' % "{:.2e}".format(c[0]),
                  savelabel = 'Sim_err_Rg_func_of_Contrast_w_InvRho',
-                 xlabel = '$\Delta \\rho (UNITS)$',
+                 xlabel = '$\Delta \\rho (cm^{-2})$',
                  ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
+CytC_data = np.loadtxt("rgErr_Pressure_CytC.txt",
+                       dtype={'names': ('Pressure', 'Rg', 'RgErr', 'RgErrRel', 'RgErrRelPercent'),
+           'formats': (np.float, np.float, np.float, np.float, np.float)}, skiprows=2)
+rho.pop(2)
+popRho = rho
+Rg_error_contrast.pop(2)
+popRgErr = Rg_error_contrast
+exptData = np.array(CytC_data['RgErrRelPercent'])
+
+err_data.plot_S2(popRho, [x * 100 for x in popRgErr], exptData,
+                 plotlabel1 = 'Simulated Error - Analytical model',
+                 plotlabel2 = 'Experimental Cytochrome C Data',
+                 savelabel = 'SimandExpt_err_Rg_func_of_Contrast',
+                 xlabel = '$\Delta \\rho (cm^{-2})$',
+                 ylabel = '($\\frac{\sigma_{R_{g}}}{R_{g}}$) $\cdot 100$')
 
 ######################################################
 
