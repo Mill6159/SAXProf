@@ -57,7 +57,7 @@ def load_RAW_mask_from_msk(fname, xpix, ypix):
 
 class SAXS:
 
-    def __init__(self, custom_path="", sample_type='Protein', qRg=1.3, a=150, d=0.2, pp=440.0e21, ps=330.0e21, t=4,
+    def __init__(self, custom_path="", sample_type='Protein', qRg=1.3, a=150, d=0.2, pp=440.0e21, ps=334.6e21, t=4,
                  total_t=4, P=2.0e11, energy=10.0, mw=10, c=2, hr=2, shape='Sphere', salt_type='Water', salt_c=1,
                  mask="none", detector="100K"):
         """create a SAXS object for X-ray small angle scattering simulation,
@@ -328,6 +328,7 @@ class SAXS:
             self.pp = pp
         elif sample_type == 'RNA':
             self.pp = 550.0e21
+
 
         # electron density, ro, of solvent, number of electrons per centimeter**3
         # REG: these are assuming additive volume ... I think. Should check this.

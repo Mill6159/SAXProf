@@ -101,18 +101,6 @@ saxs1.load_I(sample_model_1,interpolate=True,q_array = saxs1.default_q)
 saxs1.readStandardProfiles("M_Nov07_")
 
 #############################################################################
-#############################################################################
-
-#saxs1.writeStandardProfiles("Nov07_")
-
-
-#############################################################################
-#############################################################################
-
-saxs1.v = 0.72 # protein specific volume
-saxs1.pp = 322e21/saxs1.v  # (from dry mass/specific volume)
-saxs1.ps = 334.6e21  # electrons/cm3 for buffer (water)
-saxs1.p = (saxs1.pp-saxs1.ps)*2.818e-13 # contrast
 
 saxs1.d = 0.15     # microfluidic mixing chip
 #saxs1.P = 1.6e11   # 8 um x 13 um CRL beam
