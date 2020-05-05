@@ -25,11 +25,11 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 #############################################################
 # Initial User Inputs
 #############################################################
-energy = 9.962 # energy (keV)
+# energy = 9.962 # energy (keV)
 energy = 14.14 # energy (keV)
-P = 8.4e11     # flux (photons/s)
+# P = 8.4e11     # flux (photons/s)
 P = 3.8e12  # flux (photons/s)
-t = 1.0    # exposure time for individual snapshots (s)
+# t = 1.0    # exposure time for individual snapshots (s)
 snaps = 1    # number of snapshots averaged
 a = 150.47   # sample-to-detector distance (cm)
 d = 0.15     # sample cell path length (cm)
